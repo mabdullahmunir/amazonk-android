@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Amazonk</string>
+    <string name="logout">Logout</string>
+    <string name="setting">Settings</string>
+    <string name="voucher">Voucher</string>
+    <string name="history">History</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
 </resources>
