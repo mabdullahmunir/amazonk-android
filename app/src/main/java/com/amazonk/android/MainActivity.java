@@ -1,5 +1,7 @@
 package com.amazonk.android;
 
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.support.annotation.NonNull;
@@ -10,6 +12,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,11 +28,17 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout mDrawer;
+    private Intent mServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mServiceIntent = new Intent(this, LockService.class);
+        if (!isMyServiceRunning(LockService.class)) {
+            startService(mServiceIntent);
+        }
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -68,6 +77,12 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
+    }
+
+    @Override
+    public void onDestroy() {
+        stopService(mServiceIntent);
+        super.onDestroy();
     }
 
     @Override
@@ -114,5 +129,17 @@ public class MainActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                Log.i ("isMyServiceRunning?", true+"");
+                return true;
+            }
+        }
+        Log.i ("isMyServiceRunning?", false+"");
+        return false;
     }
 }
