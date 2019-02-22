@@ -1,18 +1,16 @@
 package com.amazonk.android;
 
 import android.app.ActivityManager;
-import android.app.PendingIntent;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Configuration;
-import android.nfc.NfcAdapter;
-import android.nfc.Tag;
-import android.nfc.tech.NfcF;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -21,7 +19,6 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.view.View;
 import android.widget.Button;
 
@@ -32,7 +29,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 
-import java.math.BigInteger;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -41,14 +37,6 @@ public class MainActivity extends AppCompatActivity {
     private ActionBarDrawerToggle drawerToggle;
     private DrawerLayout mDrawer;
     private Intent mServiceIntent;
-    private TextView mTextView;
-
-
-    // NFC
-    private NfcAdapter mNfcAdapter;
-    private PendingIntent mPendingIntent;
-    private IntentFilter[] mIntentFilters;
-    private String[][] mNFCTechLists;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +48,7 @@ public class MainActivity extends AppCompatActivity {
             startService(mServiceIntent);
         }
 
-        // TextView
-        mTextView = (TextView)findViewById(R.id.textView);
+        changeFragment(new MainFragment());
 
         // Set a Toolbar to replace the ActionBar.
         toolbar = findViewById(R.id.toolbar);
@@ -86,64 +73,31 @@ public class MainActivity extends AppCompatActivity {
                     public boolean onNavigationItemSelected(MenuItem menuItem) {
                         // set item as selected to persist highlight
                         menuItem.setChecked(true);
-                        // close drawer when item is tapped
-                        mDrawerLayout.closeDrawers();
 
                         // Add code here to update the UI based on the item selected
                         // For example, swap UI fragments here
                         switch (menuItem.getItemId()) {
+                            case R.id.nav_main:
+                                changeFragment(new MainFragment());
+                                break;
+                            case R.id.nav_voucher:
+                                break;
                             case R.id.nav_setting:
-                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-                                startActivity(intent);
-                                return false;
+//                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+//                                startActivity(intent);
+                                changeFragment(new SettingsFragment());
+                                break;
                             case R.id.nav_logout:
                                 signOut();
                                 break;
                         }
 
+                        // close drawer when item is tapped
+                        mDrawerLayout.closeDrawers();
+
                         return true;
                     }
                 });
-
-        // NFC setup
-        mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
-
-        if (mNfcAdapter != null)
-            mTextView.setText("Read an NFC tag");
-        else
-            mTextView.setText("This phone is not NFC enabled.");
-
-        // create an intent with tag data and deliver to this activity
-        mPendingIntent = PendingIntent.getActivity(this, 0,
-                new Intent(this, getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-
-        // set an intent filter for all MIME data
-        IntentFilter tagIntent = new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED);
-
-        try {
-            mIntentFilters = new IntentFilter[] { tagIntent };
-        } catch (Exception e) {
-            Log.e("TagDispatch", e.toString());
-        }
-
-        mNFCTechLists = new String[][] { new String[] { NfcF.class.getName() } };
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-        if (mNfcAdapter != null)
-            mNfcAdapter.enableForegroundDispatch(this, mPendingIntent, mIntentFilters, mNFCTechLists);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-
-        if (mNfcAdapter != null)
-            mNfcAdapter.disableForegroundDispatch(this);
 
         Button mbutton = findViewById(R.id.button);
         mbutton.setOnClickListener(new View.OnClickListener() {
@@ -159,6 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
     @Override
@@ -225,18 +180,10 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    // NFC
-    @Override
-    public void onNewIntent(Intent intent) {
-        String action = intent.getAction();
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            mTextView.setText(bin2hex(tag.getId())); // id-nya RFID
-        }
+    private void changeFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.fragment_holder, fragment);
+        fragmentTransaction.commit();
     }
-
-    static String bin2hex(byte[] data) {
-        return String.format("%0" + (data.length * 2) + "X", new BigInteger(1,data));
-    }
-
 }

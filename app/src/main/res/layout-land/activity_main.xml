@@ -21,11 +21,28 @@
             android:layout_height="wrap_content" />
 
         <!-- Content Placeholder -->
-        <TextView
-            android:id="@+id/textView"
+        <FrameLayout
+            android:id="@+id/fragment_holder"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="hehe" />
+            android:layout_height="match_parent" />
+        <!--<fragment-->
+            <!--android:name="com.amazonk.android.MainFragment"-->
+            <!--android:id="@+id/fragment_holder"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent" />-->
+        <!--<TextView-->
+        <!--android:id="@+id/textView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="TextView" />-->
+
+        <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Button" />
+
     </LinearLayout>
 
     <android.support.design.widget.NavigationView
