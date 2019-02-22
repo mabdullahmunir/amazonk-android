@@ -8,6 +8,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.IBinder;
+import android.os.PowerManager;
 import android.util.Log;
 
 public class LockService extends Service implements SensorEventListener {
@@ -16,6 +17,8 @@ public class LockService extends Service implements SensorEventListener {
     private SensorManager sensorManager;
     private Sensor mGravitySensor;
     private Sensor mProximitySensor;
+
+    private float prevGravityX, prevGravityY, prevGravityZ;
 
     public LockService() {
     }
@@ -41,6 +44,14 @@ public class LockService extends Service implements SensorEventListener {
         if (event.sensor == mGravitySensor) {
             // TODO : Check setting, Wake up phone
         } else if (event.sensor == mProximitySensor) {
+            if (event.values[0] < mProximitySensor.getMaximumRange()*0.1) {
+//                PowerManager pm = (PowerManager) getApplicationContext().getSystemService(Context.POWER_SERVICE);
+//                PowerManager.WakeLock wakeLock = pm.newWakeLock((PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP), TAG);
+//                wakeLock.acquire();
+//
+//                //and release again
+//                wakeLock.release();
+            }
             // TODO : Check setting, Turn of screen
         }
     }
