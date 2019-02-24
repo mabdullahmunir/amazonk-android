@@ -10,4 +10,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="s_unlock">shake_unlock</string>
+    <string name="s_lock">proximity_lock</string>
+    <string name="scan_str">Scan</string>
 </resources>

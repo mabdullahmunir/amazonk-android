@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
-        android:key="proximity_lock"
+        android:key="@string/s_lock"
         android:title="Proximity Lock" />
-    <SwitchPreference
+    <SwitchPreferenceCompat
         android:defaultValue="false"
-        android:key="shake_unlock"
+        android:key="@string/s_unlock"
         android:title="Shake to Unlock" />
 </PreferenceScreen>

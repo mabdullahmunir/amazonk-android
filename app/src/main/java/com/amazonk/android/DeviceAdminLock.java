@@ -3,6 +3,8 @@ package com.amazonk.android;
 import android.app.admin.DeviceAdminReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.widget.Toast;
 
 public class DeviceAdminLock extends DeviceAdminReceiver {
@@ -13,7 +15,6 @@ public class DeviceAdminLock extends DeviceAdminReceiver {
 
     @Override
     public void onEnabled(Context context, Intent intent) {
-//        showToast(context, context.getString(R.string.admin_receiver_status_enabled));
         showToast(context, "on");
     }
 
