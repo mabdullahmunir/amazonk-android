@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
                                 changeFragment(new MainFragment());
                                 break;
                             case R.id.nav_voucher:
+                                changeFragment(new VoucherFragment());
                                 break;
                             case R.id.nav_setting:
 //                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
