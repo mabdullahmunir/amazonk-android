@@ -26,7 +26,7 @@ public class LocationService extends Service {
     private static double TOKO_LATITUDE = -6.890569;
     private static Location amazonkLocation;
     private FusedLocationProviderClient mLocationProvider;
-    private LocationCallback locationCallback = null;
+    private LocationCallback locationCallback;
 
 
     public LocationService() {
@@ -48,14 +48,14 @@ public class LocationService extends Service {
             LocationRequest locationRequest = LocationRequest.create();
             locationRequest.setInterval(20000);
 
-            final LocationCallback locationCallback = new LocationCallback() {
+            locationCallback = new LocationCallback() {
                 @Override
                 public void onLocationResult(LocationResult locationResult) {
                     if (locationResult == null) return;
                     Log.d("Lokashyon", "sus loc, " + locationResult.getLastLocation().distanceTo(amazonkLocation));
                     if (locationResult.getLastLocation().distanceTo(amazonkLocation) > 50) {
                         IsShopping.stopShopping();
-                        // mLocationProvider.removeLocationUpdates(locationCallback); listener tetap berjalan
+                        Log.d("Lokashyon", "sus Stopped");
                         stopSelf();
                     }
                 };
@@ -98,6 +98,12 @@ public class LocationService extends Service {
 //            Log.d("Lokashyon", "sus Granted");
 //            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
 //        }
+    }
+
+    @Override
+    public void onDestroy() {
+        mLocationProvider.removeLocationUpdates(locationCallback);
+        super.onDestroy();
     }
 
     @Override
