@@ -31,7 +31,7 @@
             android:text="Total :"
             android:textSize="30sp"/>
         <TextView
-            android:id="@+id/textView3"
+            android:id="@+id/harga_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Rp. 100.000"

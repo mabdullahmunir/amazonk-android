@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.amazonk.android.model.Vouchers;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
@@ -47,9 +48,11 @@ public class VoucherFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        String userMail = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         mVouchersDoc = FirebaseFirestore.getInstance()
                 .collection("vouchers")
-                .document("senapatidiwangkara@gmail.com");
+                .document(userMail);
 
 //        Vouchers.Voucher v = new Vouchers.Voucher("hehe", 50000);
 //        Vouchers.Voucher v1 = new Vouchers.Voucher("hehe", 50000);
@@ -83,7 +86,7 @@ public class VoucherFragment extends Fragment {
 //                Vouchers test = new Gson().fromJson(documentSnapshot.getData().toString(), Vouchers.class);
 //                Log.w("Firehose", "Yeet: " + test.getVoucherList());
                 Vouchers vvv = documentSnapshot.toObject(Vouchers.class);
-                Log.w(TAG, vvv.getVoucherList().get(0).getKodeVoucher());
+//                Log.w(TAG, vvv.getVoucherList().get(0).getKodeVoucher());
             }
         });
 
