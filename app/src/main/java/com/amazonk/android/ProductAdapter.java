@@ -8,15 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amazonk.android.model.Cart;
+
 import java.util.LinkedList;
 
 public class ProductAdapter extends
         RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
 
-    private final LinkedList<String> mProductList;
+    private final LinkedList<Cart.Product> mProductList;
     private LayoutInflater mInflater;
 
-    ProductAdapter(Context context, LinkedList<String> productList) {
+    ProductAdapter(Context context, LinkedList<Cart.Product> productList) {
         mInflater = LayoutInflater.from(context);
         this.mProductList = productList;
     }
@@ -30,9 +32,12 @@ public class ProductAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull ProductViewHolder productViewHolder, int i) {
-        String mCurrent = mProductList.get(i);
-        productViewHolder.productItemView.setText(mCurrent);
-        productViewHolder.productCountView.setText("1");
+        productViewHolder.productItemView.setText(
+                mProductList.get(i).getNamaProduk()
+        );
+        productViewHolder.productCountView.setText(
+                Integer.toString(mProductList.get(i).getJumlah())
+        );
     }
 
     @Override
