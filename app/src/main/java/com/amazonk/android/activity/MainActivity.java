@@ -52,18 +52,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ImageView firstImage = (ImageView) findViewById(R.id.firstImage);
+        //final ImageView firstImage = (ImageView) findViewById(R.id.firstImage);
 
         int imageResource = getResources().getIdentifier("@drawable/ic_welcome_amaz", null, this.getPackageName());
-        firstImage.setImageResource(imageResource);
+        //firstImage.setImageResource(imageResource);
 
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                firstImage.setVisibility(View.GONE);
-                toolbar.setVisibility(View.VISIBLE);
-            }
-        }, 4000);
+//        new Handler().postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                firstImage.setVisibility(View.GONE);
+//                toolbar.setVisibility(View.VISIBLE);
+//            }
+//        }, 4000);
 
         mServiceIntent = new Intent(this, LockService.class);
         if (!isMyServiceRunning(LockService.class)) {
@@ -209,5 +209,16 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_holder, fragment);
         fragmentTransaction.commit();
+    }
+
+    // For scan
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 69) {
+            if (resultCode == 1) {
+                Log.d("Yeet", "Yeet, activity returned 0");
+            }
+        }
     }
 }

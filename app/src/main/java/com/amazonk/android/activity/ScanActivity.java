@@ -12,7 +12,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.amazonk.android.LocationService;
 import com.amazonk.android.R;
+import com.amazonk.android.model.IsShopping;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -86,7 +88,6 @@ public class ScanActivity extends AppCompatActivity {
             String result = "";
             try {
                 URL url = new URL("https://amazonk-shelf-manager.herokuapp.com/open-shelf");
-//                URL url = new URL("http://localhost:3000/open-shelf");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("POST");
                 http.setRequestProperty("Content-Type", "application/json");
@@ -130,6 +131,11 @@ public class ScanActivity extends AppCompatActivity {
             String idBarang = bin2hex(tag.getId());
 
             new OpenShelfTask().execute(idBarang);
+            if(!IsShopping.status()) {
+                IsShopping.startShopping();
+                Intent mServiceIntent = new Intent(this, LocationService.class);
+                startService(mServiceIntent);
+            }
             finish();
 
         }
