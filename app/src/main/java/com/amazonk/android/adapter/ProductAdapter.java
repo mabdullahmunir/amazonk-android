@@ -1,4 +1,4 @@
-package com.amazonk.android;
+package com.amazonk.android.adapter;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.amazonk.android.R;
 import com.amazonk.android.model.Cart;
 
 import java.util.LinkedList;
@@ -18,7 +19,7 @@ public class ProductAdapter extends
     private final LinkedList<Cart.Product> mProductList;
     private LayoutInflater mInflater;
 
-    ProductAdapter(Context context, LinkedList<Cart.Product> productList) {
+    public ProductAdapter(Context context, LinkedList<Cart.Product> productList) {
         mInflater = LayoutInflater.from(context);
         this.mProductList = productList;
     }

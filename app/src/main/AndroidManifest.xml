@@ -16,22 +16,15 @@
         android:roundIcon="@mipmap/ic_amaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ScanActivity" />
+        <activity android:name=".activity.ScanActivity" />
 
         <service
             android:name=".LockService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".LoginActivity" />
-        <activity
-            android:name=".SettingsActivity"
-            android:parentActivityName=".MainActivity">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".MainActivity" />
-        </activity>
-        <activity android:name=".SplashActivity">
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.SplashActivity">
 
             <!-- android:theme="@style/SplashTheme"> -->
             <intent-filter>
@@ -40,7 +33,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.nfc.action.TAG_DISCOVERED" />
             </intent-filter>

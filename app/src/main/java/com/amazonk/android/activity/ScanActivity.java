@@ -1,4 +1,4 @@
-package com.amazonk.android;
+package com.amazonk.android.activity;
 
 import android.app.PendingIntent;
 import android.content.Intent;
@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import com.amazonk.android.R;
 
 import java.io.BufferedReader;
 import java.io.InputStream;

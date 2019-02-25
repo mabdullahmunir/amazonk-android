@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <!-- This LinearLayout represents the contents of the screen  -->
     <LinearLayout
@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <!--<fragment-->
-            <!--android:name="com.amazonk.android.MainFragment"-->
+            <!--android:name="com.amazonk.android.fragment.MainFragment"-->
             <!--android:id="@+id/fragment_holder"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent" />-->

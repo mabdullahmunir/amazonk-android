@@ -1,4 +1,4 @@
-package com.amazonk.android;
+package com.amazonk.android.fragment;
 
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
@@ -10,6 +10,9 @@ import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.SwitchPreferenceCompat;
 import android.util.Log;
+
+import com.amazonk.android.DeviceAdminLock;
+import com.amazonk.android.R;
 
 import static android.app.Activity.RESULT_OK;
 

@@ -1,4 +1,4 @@
-package com.amazonk.android;
+package com.amazonk.android.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonk.android.adapter.ProductAdapter;
+import com.amazonk.android.R;
+import com.amazonk.android.activity.ScanActivity;
 import com.amazonk.android.model.Cart;
 import com.amazonk.android.model.Products;
 import com.google.android.gms.tasks.OnSuccessListener;

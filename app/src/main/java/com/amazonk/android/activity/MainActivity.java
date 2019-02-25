@@ -1,4 +1,4 @@
-package com.amazonk.android;
+package com.amazonk.android.activity;
 
 import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
@@ -16,13 +16,19 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.amazonk.android.DeviceAdminLock;
+import com.amazonk.android.LockService;
+import com.amazonk.android.fragment.HistoryFragment;
+import com.amazonk.android.fragment.MainFragment;
+import com.amazonk.android.R;
+import com.amazonk.android.fragment.SettingsFragment;
+import com.amazonk.android.fragment.VoucherFragment;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -81,12 +87,13 @@ public class MainActivity extends AppCompatActivity {
                             case R.id.nav_main:
                                 changeFragment(new MainFragment());
                                 break;
+                            case R.id.nav_history:
+                                changeFragment(new HistoryFragment());
+                                break;
                             case R.id.nav_voucher:
                                 changeFragment(new VoucherFragment());
                                 break;
                             case R.id.nav_setting:
-//                                Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
-//                                startActivity(intent);
                                 changeFragment(new SettingsFragment());
                                 break;
                             case R.id.nav_logout:
