@@ -1,11 +1,11 @@
 # :school: [IF3111] Tugas Besar Pengembangan Aplikasi pada Platform Khusus :school:  <!-- omit in toc -->
 
 # todo list <!-- omit in toc -->
-- [ ] Laporan mekanisme komunikasi
-- [ ] Sensor Gravity
-- [ ] Penggunaan Voucher
-- [ ] Update link in readme
-- [ ] Input image di penggunaan aplikasi readme
+- [ ] Laporan: mekanisme komunikasi
+- [ ] Laporan: Other service
+- [ ] Laporan: Penggunaan Voucher
+- [ ] Readme: Update link deliverable
+- [ ] Readme: Input image di penggunaan aplikasi readme
 
 
 - [:busts_in_silhouette: Nama Anggota Kelompok](#busts_in_silhouette-nama-anggota-kelompok)
