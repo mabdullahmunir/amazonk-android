@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
 import android.nfc.tech.NfcF;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -80,23 +81,19 @@ public class ScanActivity extends AppCompatActivity {
             mNfcAdapter.disableForegroundDispatch(this);
     }
 
-    @Override
-    public void onNewIntent(Intent intent) {
-        String action = intent.getAction();
-        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
-            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
-            mTextView.setText(bin2hex(tag.getId())); // id-nya RFID
-            String idBarang = bin2hex(tag.getId());
-
+    private class OpenShelfTask extends AsyncTask<String, Void, String> {
+        protected String doInBackground(String... ids) {
+            String result = "";
             try {
                 URL url = new URL("https://amazonk-shelf-manager.herokuapp.com/open-shelf");
+//                URL url = new URL("http://localhost:3000/open-shelf");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("POST");
                 http.setRequestProperty("Content-Type", "application/json");
                 http.setRequestProperty("Accept", "application/json");
                 http.setDoOutput(true);
 
-                String jsonPayload = "{\"idBarang\":\"" + idBarang + "\"}";
+                String jsonPayload = "{\"idBarang\":\"" + ids[0] + "\"}";
                 byte[] out = jsonPayload.getBytes(StandardCharsets.UTF_8);
                 int length = out.length;
 
@@ -109,12 +106,32 @@ public class ScanActivity extends AppCompatActivity {
 
                 BufferedReader in = new BufferedReader(new InputStreamReader(http.getInputStream()));
                 String inputLine;
-                while ((inputLine = in.readLine()) != null) Log.d("Scan", inputLine);
+                while ((inputLine = in.readLine()) != null) result = result + inputLine;
                 in.close();
                 os.close();
+
             } catch (Exception e) {
-                e.printStackTrace();
+                Log.e("NFC Scan", "Yeet " + e.toString());
             }
+            return result;
+        }
+        protected void onPostExecute(String result) {
+            Log.d("NFC Scan", "Yeet son " + result);
+        }
+
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        String action = intent.getAction();
+        if (NfcAdapter.ACTION_TAG_DISCOVERED.equals(action)) {
+            Tag tag = intent.getParcelableExtra(NfcAdapter.EXTRA_TAG);
+            mTextView.setText(bin2hex(tag.getId())); // id-nya RFID
+            String idBarang = bin2hex(tag.getId());
+
+            new OpenShelfTask().execute(idBarang);
+            finish();
+
         }
     }
 

@@ -8,6 +8,9 @@
 
     <uses-permission android:name="android.permission.NFC" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
 
     <application
         android:allowBackup="true"
@@ -16,7 +19,16 @@
         android:roundIcon="@mipmap/ic_amaz_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activity.ScanActivity" />
+        <service
+            android:name=".LocationService"
+            android:enabled="true"
+            android:exported="true"></service>
+
+        <activity android:name=".activity.ScanActivity">
+            <intent-filter>
+                <action android:name="android.nfc.action.TAG_DISCOVERED" />
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".LockService"
@@ -33,12 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.MainActivity">
-            <intent-filter>
-                <action android:name="android.nfc.action.TAG_DISCOVERED" />
-            </intent-filter>
-        </activity>
-
+        <activity android:name=".activity.MainActivity"></activity>
 
         <receiver
             android:name=".DeviceAdminLock"
