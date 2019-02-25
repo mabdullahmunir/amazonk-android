@@ -6,6 +6,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -21,6 +22,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import com.amazonk.android.DeviceAdminLock;
 import com.amazonk.android.LockService;
@@ -49,6 +51,19 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final ImageView firstImage = (ImageView) findViewById(R.id.firstImage);
+
+        int imageResource = getResources().getIdentifier("@drawable/ic_welcome_amaz", null, this.getPackageName());
+        firstImage.setImageResource(imageResource);
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                firstImage.setVisibility(View.GONE);
+                toolbar.setVisibility(View.VISIBLE);
+            }
+        }, 4000);
 
         mServiceIntent = new Intent(this, LockService.class);
         if (!isMyServiceRunning(LockService.class)) {
