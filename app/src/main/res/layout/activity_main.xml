@@ -18,14 +18,7 @@
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-        <!--<ImageView-->
-            <!--android:id="@+id/firstImage"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="681dp"-->
-            <!--app:srcCompat="@drawable/ic_welcome_amaz" />-->
+            android:layout_height="wrap_content" />
 
         <!-- Content Placeholder -->
         <FrameLayout

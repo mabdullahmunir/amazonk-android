@@ -11,10 +11,7 @@ import android.view.ViewGroup;
 
 import com.amazonk.android.R;
 import com.amazonk.android.adapter.HistoryAdapter;
-import com.amazonk.android.model.Cart;
 import com.amazonk.android.model.Histories;
-import com.amazonk.android.model.Products;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -69,7 +66,6 @@ public class HistoryFragment extends Fragment {
                 }
             }
         });
-
 
         // Recycler View
         // Get a handle to the RecyclerView.
