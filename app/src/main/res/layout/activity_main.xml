@@ -18,14 +18,23 @@
         <include
             layout="@layout/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <ImageView
+            android:id="@+id/firstImage"
+            android:layout_width="match_parent"
+            android:layout_height="681dp"
+            app:srcCompat="@drawable/ic_welcome_amaz" />
 
         <!-- Content Placeholder -->
         <FrameLayout
             android:id="@+id/fragment_holder"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent" >
+
+        </FrameLayout>
         <!--<fragment-->
             <!--android:name="com.amazonk.android.fragment.MainFragment"-->
             <!--android:id="@+id/fragment_holder"-->
