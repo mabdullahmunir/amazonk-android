@@ -1,12 +1,9 @@
 package com.amazonk.android.activity;
 
 import android.app.ActivityManager;
-import android.app.admin.DevicePolicyManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -20,11 +17,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 
-import com.amazonk.android.DeviceAdminLock;
 import com.amazonk.android.LockService;
 import com.amazonk.android.fragment.HistoryFragment;
 import com.amazonk.android.fragment.MainFragment;
@@ -51,19 +44,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        //final ImageView firstImage = (ImageView) findViewById(R.id.firstImage);
-
-        int imageResource = getResources().getIdentifier("@drawable/ic_welcome_amaz", null, this.getPackageName());
-        //firstImage.setImageResource(imageResource);
-
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                firstImage.setVisibility(View.GONE);
-//                toolbar.setVisibility(View.VISIBLE);
-//            }
-//        }, 4000);
 
         mServiceIntent = new Intent(this, LockService.class);
         if (!isMyServiceRunning(LockService.class)) {
@@ -122,22 +102,6 @@ public class MainActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
-        Button mbutton = findViewById(R.id.button);
-        mbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Lock device
-                DevicePolicyManager mDPM = (DevicePolicyManager)getSystemService(Context.DEVICE_POLICY_SERVICE);
-                ComponentName deviceAdminSample;
-                deviceAdminSample = new ComponentName(getApplicationContext(), DeviceAdminLock.class);
-
-                if (mDPM.isAdminActive(deviceAdminSample)) {
-                    mDPM.lockNow();
-                }
-            }
-        });
-
     }
 
     @Override

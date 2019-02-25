@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amazonk.android.R;
-import com.amazonk.android.model.Cart;
 import com.amazonk.android.model.Histories;
 
 import java.util.LinkedList;
@@ -34,11 +33,15 @@ public class HistoryAdapter extends
 
     @Override
     public void onBindViewHolder(@NonNull HistoryAdapter.HistoryViewHolder productViewHolder, int i) {
+        int totalHarga = 0;
+        for (Histories.Product product : mHistoryList.get(i).getListProduk()) {
+            totalHarga += product.getTotalHarga();
+        }
         productViewHolder.totalPriceView.setText(
-                "hehehe"
+                Integer.toString(totalHarga)
         );
         productViewHolder.dateView.setText(
-                "hehe"
+                mHistoryList.get(i).getTanggal()
         );
     }
 
