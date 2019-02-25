@@ -3,6 +3,8 @@ package com.amazonk.android.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.amazonk.android.R;
+import com.amazonk.android.adapter.VoucherAdapter;
 import com.amazonk.android.model.Vouchers;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -31,13 +34,11 @@ import java.util.Map;
  */
 public class VoucherFragment extends Fragment {
     private static final String TAG = VoucherFragment.class.getSimpleName();
-    private ListView mVoucherListView;
+    private RecyclerView mVoucherListView;
     private DocumentReference mVouchersDoc;
+    private Vouchers mVouchers = new Vouchers();
     private Map<String, Object> voucherMap;
     private String[] voucherKeyArray = new String[] {"No voucher available"};
-    private Object[] voucherObjectArray;
-    private List<String[]> voucherArrayArrayList;
-    private List<String> voucherCodeArrayList;
 
 
     public VoucherFragment() {
@@ -52,6 +53,7 @@ public class VoucherFragment extends Fragment {
         mVouchersDoc = FirebaseFirestore.getInstance()
                 .collection("vouchers")
                 .document(userMail);
+
 
 //        Vouchers.Voucher v = new Vouchers.Voucher("hehe", 50000);
 //        Vouchers.Voucher v1 = new Vouchers.Voucher("hehe", 50000);
@@ -73,6 +75,9 @@ public class VoucherFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_voucher, container, false);
 
+//        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.voucher_listview, voucherKeyArray);
+        final VoucherAdapter adapter = new VoucherAdapter(getContext(), mVouchers);
+
         mVouchersDoc.addSnapshotListener(new EventListener<DocumentSnapshot>() {
             @Override
             public void onEvent(@Nullable DocumentSnapshot documentSnapshot,
@@ -82,16 +87,15 @@ public class VoucherFragment extends Fragment {
                     return;
                 }
                 Log.w(TAG, "new data : " + documentSnapshot.getData());
-//                Vouchers test = new Gson().fromJson(documentSnapshot.getData().toString(), Vouchers.class);
-//                Log.w("Firehose", "Yeet: " + test.getVoucherList());
-                Vouchers vvv = documentSnapshot.toObject(Vouchers.class);
-//                Log.w(TAG, vvv.getVoucherList().get(0).getKodeVoucher());
+                mVouchers = documentSnapshot.toObject(Vouchers.class);
+                Log.d(TAG, "new data: " + mVouchers.getVoucherList().get(0).getKodeVoucher());
+                adapter.notifyDataSetChanged();
             }
         });
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.voucher_listview, voucherKeyArray);
         mVoucherListView = view.findViewById(R.id.voucher_list);
         mVoucherListView.setAdapter(adapter);
+        mVoucherListView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         return view;
     }

@@ -34,7 +34,7 @@
             android:id="@+id/harga_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Rp. 100.000"
+            android:text="Rp. 0"
             android:layout_marginStart="30sp"
             android:textSize="24sp"/>
     </LinearLayout>

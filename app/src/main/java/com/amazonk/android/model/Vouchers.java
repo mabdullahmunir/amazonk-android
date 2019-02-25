@@ -7,6 +7,7 @@ public class Vouchers {
     private ArrayList<Voucher> voucherList;
 
     public Vouchers() {
+        this.voucherList = new ArrayList<>();
     }
 
     public Vouchers(ArrayList<Voucher> voucherList) {
