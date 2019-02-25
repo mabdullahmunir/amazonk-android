@@ -1,6 +1,13 @@
 package com.amazonk.android.fragment;
 
 import android.content.Intent;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.NinePatch;
+import android.graphics.Paint;
+import android.graphics.Rect;
+import android.graphics.pdf.PdfDocument;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,9 +19,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.amazonk.android.activity.ScanActivity;
 import com.amazonk.android.adapter.ProductAdapter;
 import com.amazonk.android.R;
-import com.amazonk.android.activity.ScanActivity;
 import com.amazonk.android.model.Cart;
 import com.amazonk.android.model.Products;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -25,6 +32,12 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.LinkedList;
 
 import javax.annotation.Nullable;
@@ -62,7 +75,12 @@ public class MainFragment extends Fragment {
         mScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mAdapter.notifyDataSetChanged();
+
+//                Intent intent = new Intent();
+//                intent.setAction(Intent.ACTION_VIEW);
+//                intent.putExtra(Intent.EXTRA_TEXT, "hehe");
+//                intent.setType("text/plain");
+//                startActivity(intent);
                 Intent intent = new Intent(getContext(), ScanActivity.class);
                 startActivity(intent);
             }
