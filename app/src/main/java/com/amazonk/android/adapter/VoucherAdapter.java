@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.amazonk.android.R;
+import com.amazonk.android.model.SelectedVoucher;
 import com.amazonk.android.model.Vouchers;
 
 public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherViewHolder> {
@@ -25,7 +26,7 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
     @Override
     public VoucherViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         View mItemView = mInflater.inflate(R.layout.voucher_listview, viewGroup, false);
-        return new VoucherViewHolder(mItemView, this);
+        return new VoucherViewHolder(mItemView, this, i);
     }
 
     @Override
@@ -48,11 +49,17 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.VoucherV
         final TextView potonganView;
         final VoucherAdapter mAdapter;
 
-        VoucherViewHolder(View itemView, VoucherAdapter adapter) {
+        VoucherViewHolder(View itemView, VoucherAdapter adapter, final int idx) {
             super(itemView);
             kodeVoucherView = itemView.findViewById(R.id.kodeVoucher);
             potonganView = itemView.findViewById(R.id.potongan);
             this.mAdapter = adapter;
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    SelectedVoucher.setPotongan(mAdapter.mVouchers.getVoucherList().get(idx).getPotongan());
+                }
+            });
         }
     }
 }

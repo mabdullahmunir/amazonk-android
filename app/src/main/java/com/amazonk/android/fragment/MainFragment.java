@@ -24,6 +24,7 @@ import com.amazonk.android.adapter.ProductAdapter;
 import com.amazonk.android.R;
 import com.amazonk.android.model.Cart;
 import com.amazonk.android.model.Products;
+import com.amazonk.android.model.SelectedVoucher;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
@@ -119,6 +120,7 @@ public class MainFragment extends Fragment {
                                         product.setNamaProduk(products.getNamaProduk());
                                         mProductList.add(product);
                                         total += products.getHarga() * product.getJumlah();
+                                        total -= SelectedVoucher.getPotongan();
                                         mAdapter.notifyDataSetChanged();
                                         mHargaView.setText("Rp. " + total);
                                     }

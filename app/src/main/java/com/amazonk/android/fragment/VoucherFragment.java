@@ -86,9 +86,11 @@ public class VoucherFragment extends Fragment {
                     Log.w(TAG, "listen:error", e);
                     return;
                 }
-                Log.w(TAG, "new data : " + documentSnapshot.getData());
-                mVouchers = documentSnapshot.toObject(Vouchers.class);
-                Log.d(TAG, "new data: " + mVouchers.getVoucherList().get(0).getKodeVoucher());
+                mVouchers.getVoucherList().clear();
+                Vouchers newVouchers = documentSnapshot.toObject(Vouchers.class);
+                for (int i = 0; i < newVouchers.getVoucherList().size(); i++) {
+                    mVouchers.getVoucherList().add(newVouchers.getVoucherList().get(i));
+                }
                 adapter.notifyDataSetChanged();
             }
         });
