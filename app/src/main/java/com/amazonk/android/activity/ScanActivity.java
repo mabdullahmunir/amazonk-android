@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.amazonk.android.LocationService;
 import com.amazonk.android.R;
 import com.amazonk.android.model.IsShopping;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -87,14 +88,15 @@ public class ScanActivity extends AppCompatActivity {
         protected String doInBackground(String... ids) {
             String result = "";
             try {
-                URL url = new URL("https://amazonk-shelf-manager.herokuapp.com/open-shelf");
+                URL url = new URL("http://34.226.140.190:8000/open-shelf");
                 HttpURLConnection http = (HttpURLConnection) url.openConnection();
                 http.setRequestMethod("POST");
                 http.setRequestProperty("Content-Type", "application/json");
                 http.setRequestProperty("Accept", "application/json");
                 http.setDoOutput(true);
 
-                String jsonPayload = "{\"idBarang\":\"" + ids[0] + "\"}";
+                String jsonPayload = "{\"barang\":\"" + ids[0] + "\", \"email\":\"" + FirebaseAuth.getInstance().getCurrentUser().getEmail() + "\"}";
+                Log.d("Yeet", jsonPayload);
                 byte[] out = jsonPayload.getBytes(StandardCharsets.UTF_8);
                 int length = out.length;
 
