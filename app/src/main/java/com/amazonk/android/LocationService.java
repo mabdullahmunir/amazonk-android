@@ -46,7 +46,7 @@ public class LocationService extends Service {
             Log.d("Lokashyon", "sus Granted");
 
             LocationRequest locationRequest = LocationRequest.create();
-            locationRequest.setInterval(20000);
+            locationRequest.setInterval(30000);
 
             locationCallback = new LocationCallback() {
                 @Override
@@ -54,9 +54,14 @@ public class LocationService extends Service {
                     if (locationResult == null) return;
                     Log.d("Lokashyon", "sus loc, " + locationResult.getLastLocation().distanceTo(amazonkLocation));
                     if (locationResult.getLastLocation().distanceTo(amazonkLocation) > 50) {
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                            }
+//                        }).start();
                         IsShopping.stopShopping();
                         Log.d("Lokashyon", "sus Stopped");
-                        stopSelf();
+                        stopSelf(); // Race sama stopShopping
                     }
                 };
             };
@@ -64,40 +69,7 @@ public class LocationService extends Service {
             mLocationProvider.requestLocationUpdates(locationRequest,
                     locationCallback,
                     null /* Looper */);
-
-
         }
-
-//          Entah kenapa gabisa pake fake gps
-//        // Acquire a reference to the system Location Manager
-//        final LocationManager locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
-//
-//        // Define a listener that responds to location updates
-//        LocationListener locationListener = new LocationListener() {
-//            public void onLocationChanged(Location location) {
-//                Log.d("Lokashyon", "sus g, " + location.getLatitude() + ", " + location.getLongitude());
-//                Log.d("Lokashyon", "sus g, Distance: " + location.distanceTo(amazonkLocation));
-//                if (location.distanceTo(amazonkLocation) > 50) {
-//                    IsShopping.stopShopping();
-//                    Log.d("Lokashyon", "sus g, Distance: " + location.distanceTo(amazonkLocation) + " , stopping...");
-//                    locationManager.removeUpdates(this);
-//                    stopSelf();
-//                } else Log.d("Lokahsyon", "sus g, u in?");
-//            }
-//
-//            public void onStatusChanged(String provider, int status, Bundle extras) {}
-//
-//            public void onProviderEnabled(String provider) {}
-//
-//            public void onProviderDisabled(String provider) {}
-//        };
-//
-//        // Register the listener with the Location Manager to receive location updates
-//        if (checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
-//                || checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-//            Log.d("Lokashyon", "sus Granted");
-//            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, locationListener);
-//        }
     }
 
     @Override
